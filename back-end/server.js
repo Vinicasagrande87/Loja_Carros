@@ -1,31 +1,36 @@
 require('dotenv').config();
-//requerendo o a biblioteca dotenv para esse arquivo
+// requerendo a biblioteca dotenv para esse arquivo
 
 const express = require('express');
-// buscando o framework express e estanciando suas ferramentas dentro da variavel express
+// buscando o framework express e instanciando suas ferramentas dentro da variável express
 
 const routes = require('./routes.js'); 
-// IMPORTAÇÃO: chamando o arquivo routes.js que está na mesma pasta (back-end)
-
-const app = express();
-// estou estanciando as funcionalidades do framework express dentro da variavel app
-
-const PORT = process.env.PORT || 3000;
-// estou criando uma alternativa a alocação da aplicação da nuvem ou na porta logica 3000 desse note
+// IMPORTAÇÃO: chamando o arquivo routes.js que está na mesma pasta
 
 const cors = require('cors');
-// estanciando o cors pq ele é o responsavel pela comunicação entre back e front
+// instanciando o cors porque ele é o responsável pela comunicação entre back e front
+
+const app = express();
+// estou instanciando as funcionalidades do framework express dentro da variável app
+
+const PORT = process.env.PORT || 3000;
+// estou criando uma alternativa à alocação da aplicação na nuvem ou na porta lógica 3000 desse note
+
+// --- MIDDLEWARES ---
 
 app.use(express.json());
-// essa linha funciona como um middlware essa faz a tradução entre express e json
+// essa linha funciona como um middleware, faz a tradução entre express e json
 
 app.use(cors());
-// estou usando as ferramentos da variavel app para por o cros no trabalho
+// estou usando as ferramentas da variável app para colocar o cors no trabalho
+
+app.use('/uploads', express.static('uploads'));
+// LIBERAÇÃO DE ACESSO: permite que as fotos salvas na pasta 'uploads' sejam acessadas via navegador/URL
 
 app.get('/', (req, res) => {
     res.send('servidor ativo👍');
 });
-// informando que o endereço / esta ativo
+// informando que o endereço / está ativo
 
 app.use(routes);
 // PONTE DE CONEXÃO: agora o servidor aguarda as requisições e as direciona para o arquivo de rotas único
@@ -33,7 +38,7 @@ app.use(routes);
 app.listen(PORT, () => {
     console.log(`Servidor funcionando na porta ${PORT}🚀`);
 });
-// informa a porta que sera usada
+// informa a porta que será usada
 
 module.exports = app;
-// deixa a variavel app para outros arquivos caso desejem usar
+// deixa a variável app disponível para outros arquivos caso desejem usar
