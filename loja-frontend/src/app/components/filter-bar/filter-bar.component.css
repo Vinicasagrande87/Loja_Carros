@@ -1,0 +1,2 @@
+.filter-bar { display: flex; justify-content: center; gap: 15px; padding: 20px; }
+.filter-btn { background: #eee; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; }

@@ -1,0 +1,11 @@
+<header class="header-motors">
+  <div class="container nav-box">
+    <h1 (click)="setPage('home')" style="cursor: pointer;">CASAGRANDE MOTORS</h1>
+    <nav aria-label="Navegação Principal">
+      <a (click)="setPage('home')" [class.active-link]="view === 'home'">Home</a>
+      <a (click)="setPage('estoque')" [class.active-link]="view === 'estoque'">Estoque</a>
+      <a (click)="setPage('contatos')" [class.active-link]="view === 'contatos'">Contatos</a>
+      <a *ngIf="isAdmin" (click)="setPage('admin')" [class.active-link]="view === 'admin'">Admin</a>
+    </nav>
+  </div>
+</header>

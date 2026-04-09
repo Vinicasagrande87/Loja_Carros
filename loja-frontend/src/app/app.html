@@ -1,86 +1,43 @@
-<header class="header-motors">
-  <div class="container nav-box">
-    <h1 (click)="setPage('home')" style="cursor: pointer;">CASAGRANDE MOTORS</h1>
-    <nav>
-      <a (click)="setPage('home')">Home</a>
-      <a (click)="setPage('estoque')">Estoque</a>
-      <a *ngIf="isAdmin" (click)="setPage('admin')">Admin</a>
-    </nav>
-  </div>
-</header>
+<main>
+  <app-header 
+    [view]="view" 
+    [isAdmin]="isAdmin" 
+    (navigate)="onNavigate($event)">
+  </app-header>
 
-<main class="container">
-  <div class="filter-bar" *ngIf="view === 'home' || view === 'estoque'">
-    <button [class.active]="categoriaSelecionada === 'caminhonete'" (click)="setFilter('caminhonete')">
-      <span>Caminhonetes</span>
-      <img src="caminhonete.png" alt="Caminhonete" class="class-icon">
-    </button>
-    <button [class.active]="categoriaSelecionada === 'suv'" (click)="setFilter('suv')">
-      <span>SUVs</span>
-      <img src="suv.png" alt="SUV" class="class-icon">
-    </button>
-    <button [class.active]="categoriaSelecionada === 'sedan'" (click)="setFilter('sedan')">
-      <span>Sedans</span>
-      <img src="sedan.png" alt="Sedan" class="class-icon">
-    </button>
-    <button [class.active]="categoriaSelecionada === 'hatch'" (click)="setFilter('hatch')">
-      <span>Hatchs</span>
-      <img src="hatch.png" alt="Hatch" class="class-icon">
-    </button>
-  </div>
+  <div class="container main-content">
+    
+    <app-home 
+      *ngIf="view === 'home'" 
+      (verEstoque)="onNavigate('estoque')">
+    </app-home>
 
-  <div *ngIf="view === 'home' && (categoriaSelecionada === 'todos' || !categoriaSelecionada)" class="hero">
-    <h2>Performance e Rigor.</h2>
-    <p>A curadoria automotiva premium de Canoas/RS.</p>
-  </div>
+    <app-estoque 
+      *ngIf="view === 'estoque'" 
+      [carros]="carrosExibidos" 
+      [isAdmin]="isAdmin"
+      (filtrar)="onFilter($event)"
+      (editarCarro)="editar($event)"
+      (excluirCarro)="excluir($event)">
+    </app-estoque>
 
-  <div class="section-title" *ngIf="view === 'home'">
-    <h3>DESTAQUES DA SEMANA</h3>
+    <app-admin 
+      *ngIf="view === 'admin'" 
+      [novoCarro]="novoCarro" 
+      [isEditando]="isEditando"
+      (salvar)="salvar()"
+      (cancelar)="cancelar()">
+    </app-admin>
+
+    <app-contatos 
+      *ngIf="view === 'contatos'">
+    </app-contatos>
+
   </div>
 
-  <div *ngIf="view === 'estoque' || view === 'home'" class="inventory-grid">
-    <div class="card" *ngFor="let c of carrosExibidos; let i = index">
-      <div class="img-box">
-        <img [src]="c.foto" [alt]="c.modelo" onerror="this.src='placeholder.png'">
-        <div class="admin-tools" *ngIf="isAdmin">
-          <button (click)="editar(c, i)">✏️</button>
-          <button (click)="excluir(i)">🗑️</button>
-        </div>
-      </div>
-      <div class="info-box">
-        <span class="tag">{{ c.marca }} | {{ c.categoria }}</span>
-        <h4>{{ c.modelo }}</h4>
-        <p>{{ c.descricao }}</p>
-        <div class="price-row">
-          <strong>R$ {{ c.preco | number:'1.2-2' }}</strong>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-footer></app-footer>
 
-  <div *ngIf="view === 'admin' && isAdmin" class="admin-area">
-    <h3>{{ isEditando ? 'Atualizar Veículo' : 'Novo Cadastro' }}</h3>
-    <form (submit)="salvar()" class="form-motors">
-      <input [(ngModel)]="novoCarro.marca" name="marca" placeholder="Marca">
-      <input [(ngModel)]="novoCarro.modelo" name="modelo" placeholder="Modelo">
-      <select [(ngModel)]="novoCarro.categoria" name="cat" class="input-select">
-        <option value="">Selecione a Categoria</option>
-        <option value="caminhonete">Caminhonete</option>
-        <option value="suv">SUV</option>
-        <option value="sedan">Sedan</option>
-        <option value="hatch">Hatch</option>
-      </select>
-      <input [(ngModel)]="novoCarro.preco" name="preco" type="number" placeholder="Preço">
-      <textarea [(ngModel)]="novoCarro.descricao" name="desc" placeholder="Descrição"></textarea>
-      <div class="btns-row">
-        <button type="button" (click)="setPage('estoque')">Cancelar</button>
-        <button type="submit">Salvar Veículo</button>
-      </div>
-    </form>
-  </div>
+  <button *ngIf="!isAdmin" class="admin-float" (click)="acessoAdmin()" title="Acesso Restrito">
+    🔐
+  </button>
 </main>
-
-<footer class="footer-motors">
-  <p>&copy; 2026 Casagrande Motors. Desenvolvido por Vinícius Casagrande.</p>
-  <button (click)="acessoAdmin()" style="border:none; background:none; opacity: 0.1;">.</button>
-</footer>

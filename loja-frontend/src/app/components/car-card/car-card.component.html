@@ -1,0 +1,11 @@
+<article class="card">
+  <img [src]="carro.foto" [alt]="carro.modelo">
+  <div class="info">
+    <h4>{{ carro.modelo }}</h4>
+    <p>{{ carro.preco | number:'1.2-2' }}</p>
+    <div *ngIf="isAdmin" class="btns">
+      <button (click)="editar.emit()">✏️</button>
+      <button (click)="excluir.emit()">🗑️</button>
+    </div>
+  </div>
+</article>

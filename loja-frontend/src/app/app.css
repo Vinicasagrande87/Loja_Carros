@@ -1,178 +1,89 @@
-/* CASAGRANDE MOTORS - CSS INDEXADO V5 
-   Removido filtro "Todos" | Foco: Alinhamento Simétrico de Categorias
-*/
+/* CONFIGURAÇÕES GLOBAIS - CASAGRANDE MOTORS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
 
-:root {
-  --red: #c0392b;
-  --dark: #1d1d1f;
-  --light: #f5f5f7;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
-* { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
-  font-family: 'Inter', -apple-system, sans-serif; 
+body {
+  background-color: #fbfbfd;
+  color: #1d1d1f;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-body { 
-  background: var(--light); 
-  color: var(--dark); 
-  line-height: 1.6;
+/* Container principal para alinhar todo o conteúdo */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.container { 
-  max-width: 1240px; 
-  margin: 0 auto; 
-  padding: 0 20px; 
+/* Espaçamento para o conteúdo não grudar no header/footer */
+.main-content {
+  min-height: 75vh;
+  padding-top: 20px;
+  padding-bottom: 60px;
 }
 
-.header-motors { 
-  background: white; 
-  padding: 18px 0; 
-  border-bottom: 1px solid rgba(0,0,0,0.05); 
-  position: sticky; 
-  top: 0; 
-  z-index: 1000;
-}
-
-.nav-box { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-}
-
-.nav-box h1 { 
-  font-size: 1.25rem; 
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-nav a { 
-  margin-left: 25px; 
-  cursor: pointer; 
-  font-weight: 600; 
-  font-size: 0.85rem;
-  text-transform: uppercase;
-}
-
-/* FILTROS (4 CATEGORIAS COM IMAGENS) */
-.filter-bar {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 40px 0 20px 0;
-  flex-wrap: wrap;
-}
-
-.filter-bar button {
-  background: white;
-  color: var(--dark);
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  border-radius: 24px;
-  font-size: 0.9rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  min-width: 150px;
-  box-shadow: var(--shadow);
-}
-
-.filter-bar button:hover {
-  border-color: var(--red);
-  transform: translateY(-5px);
-}
-
-.filter-bar button.active {
-  background: var(--dark);
-  color: white;
-  border-color: var(--dark);
-}
-
-.class-icon {
-  width: 100px; /* Imagem um pouco maior para preencher o espaço do botão */
-  height: 50px;
-  object-fit: contain;
-}
-
-.hero {
-  padding: 30px 0 10px 0;
-  text-align: center;
-}
-
-.hero h2 {
-  font-size: 2.8rem;
-  font-weight: 800;
-}
-
+/* Títulos de Seção (Usados na Home e Contatos) */
 .section-title {
   text-align: center;
-  padding: 20px 0;
+  margin-bottom: 50px;
 }
 
-.section-title h3 {
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #1d1d1f;
+}
+
+.section-title p {
+  color: #86868b;
   font-size: 1.1rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
 }
 
-/* GRID 4 COLUNAS */
-.inventory-grid { 
-  display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 25px; 
-  padding: 20px 0 60px 0; 
-}
-
-.card { 
-  background: white; 
-  border-radius: 24px; 
-  overflow: hidden; 
-  box-shadow: var(--shadow); 
-  transition: var(--transition);
+/* Botão Flutuante de Admin (Canto inferior direito) */
+.admin-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #1d1d1f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 1001;
+  font-size: 1.4rem;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover { transform: translateY(-8px); }
-
-.img-box { 
-  height: 200px; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 20px; 
-  position: relative;
+.admin-float:hover {
+  transform: scale(1.1) rotate(5deg);
+  background: #c0392b;
 }
 
-.img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-.info-box { padding: 24px; flex-grow: 1; }
-.tag { color: var(--red); font-weight: 900; font-size: 0.6rem; text-transform: uppercase; }
-.info-box h4 { margin: 8px 0; font-size: 1.4rem; font-weight: 800; }
-
-.price-row { 
-  margin-top: auto; 
-  font-size: 1.3rem; 
-  font-weight: 900; 
-  border-top: 1px solid #f0f0f0; 
-  padding-top: 15px; 
+/* Utilitários de Animação */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
 }
 
-.footer-motors { 
-  text-align: center; 
-  padding: 60px 0; 
-  color: #bbb; 
-  font-size: 0.75rem; 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 1024px) { .inventory-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .inventory-grid { grid-template-columns: 1fr; } }
+/* Ajustes para Scroll suave */
+html {
+  scroll-behavior: smooth;
+}

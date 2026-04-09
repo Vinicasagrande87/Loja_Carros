@@ -2,6 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// Importações corrigidas para 'components' (com N)
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ContatosComponent } from './pages/contatos/contatos.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { EstoqueComponent } from './pages/estoque/estoque.component';
+import { HomeComponent } from './pages/home/home.component';
+
+// Importação dos novos sub-componentes (para o Angular reconhecê-los)
+import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
+import { CarCardComponent } from './components/car-card/car-card.component';
+
 interface Carro {
   marca: string;
   modelo: string;
@@ -14,7 +26,19 @@ interface Carro {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, DecimalPipe],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    DecimalPipe, 
+    FooterComponent,
+    HeaderComponent,
+    ContatosComponent,
+    AdminComponent,
+    EstoqueComponent,
+    HomeComponent,
+    FilterBarComponent, // Adicionado aqui
+    CarCardComponent    // Adicionado aqui
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -25,10 +49,8 @@ export class AppComponent implements OnInit {
   indexEditando: number | null = null;
   categoriaSelecionada: string = 'todos';
   
-  // Seu token preservado
   private readonly TOKEN_SISTEMA = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzY0Njk4OTE2LCJleHAiOjE3NjUzMDM3MTZ9.h7NqR__ufGA7huy-11HoslOj_0yHgVABZnkhF2J04ao';
 
-  // Lista mantida como backup de segurança
   listaCarros: Carro[] = [
     { marca: 'TOYOTA', modelo: 'Hilux SRX', categoria: 'caminhonete', preco: 280000, descricao: 'Diesel 4x4, único dono.', foto: 'hilux.png' },
     { marca: 'JEEP', modelo: 'Compass', categoria: 'suv', preco: 150000, descricao: 'T270 Flex, teto panorâmico.', foto: 'compass.png' },
@@ -39,25 +61,23 @@ export class AppComponent implements OnInit {
   novoCarro: Carro = this.limparForm();
 
   ngOnInit() {
-    console.log("Casagrande Motors: Layout e imagens configurados.");
+    console.log("Casagrande Motors: Sistema iniciado com sucesso.");
   }
 
   get carrosExibidos() {
-    if (this.categoriaSelecionada === 'todos') {
-      return this.listaCarros;
-    }
+    if (this.categoriaSelecionada === 'todos') return this.listaCarros;
     return this.listaCarros.filter(c => c.categoria === this.categoriaSelecionada);
   }
 
-  setFilter(cat: string) {
-    this.categoriaSelecionada = cat;
-    this.view = 'estoque';
-  }
-
-  setPage(page: string) {
+  onNavigate(page: string) {
     this.view = page;
     this.categoriaSelecionada = 'todos';
     window.scrollTo(0, 0);
+  }
+
+  onFilter(cat: string) {
+    this.categoriaSelecionada = cat;
+    this.view = 'estoque';
   }
 
   limparForm() {
@@ -68,7 +88,7 @@ export class AppComponent implements OnInit {
     const token = prompt("Insira o Token de Acesso:");
     if (token === this.TOKEN_SISTEMA) {
       this.isAdmin = true;
-      this.setPage('admin');
+      this.onNavigate('admin');
     }
   }
 
@@ -79,14 +99,14 @@ export class AppComponent implements OnInit {
       this.listaCarros.push({ ...this.novoCarro });
     }
     this.cancelar();
-    this.setPage('estoque');
+    this.onNavigate('estoque');
   }
 
-  editar(carro: Carro, i: number) {
+  editar(event: {carro: Carro, index: number}) {
     this.isEditando = true;
-    this.indexEditando = i;
-    this.novoCarro = { ...carro };
-    this.setPage('admin');
+    this.indexEditando = event.index;
+    this.novoCarro = { ...event.carro };
+    this.onNavigate('admin');
   }
 
   excluir(i: number) {
@@ -99,5 +119,6 @@ export class AppComponent implements OnInit {
     this.isEditando = false;
     this.indexEditando = null;
     this.novoCarro = this.limparForm();
+    this.onNavigate('estoque');
   }
 }

@@ -1,0 +1,35 @@
+.header-motors { 
+  background-color: #ffffff; 
+  padding: 18px 0; 
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+  position: sticky; 
+  top: 0; 
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.nav-box { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.nav-box h1 { 
+  font-size: 1.25rem; 
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+nav a { 
+  margin-left: 25px; 
+  cursor: pointer; 
+  font-weight: 600; 
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+nav a:hover, .active-link { 
+  color: #c0392b; 
+}
