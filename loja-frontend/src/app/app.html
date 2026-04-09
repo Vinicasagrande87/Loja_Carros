@@ -1,89 +1,57 @@
-<header class="main-header">
-  <div class="container header-wrap">
-    <div class="brand-identity">
-      <a href="/" style="text-decoration: none; color: inherit;">
-        <h1>Casagrande Motors</h1>
-      </a>
-    </div>
-
-    <nav class="main-navigation">
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/">Estoque</a></li>
-        <li><a href="/">Contato</a></li>
-      </ul>
+<header class="header-motors">
+  <div class="container nav-box">
+    <h1 (click)="setPage('home')" style="cursor: pointer;">CASAGRANDE MOTORS</h1>
+    <nav>
+      <a (click)="setPage('home')">Home</a>
+      <a (click)="setPage('estoque')">Estoque</a>
+      <a *ngIf="isAdmin" (click)="setPage('admin')">Admin</a>
     </nav>
   </div>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="container">
-      <h2>Confiança em movimento.</h2>
-      <p>Selecione a categoria que melhor define sua próxima jornada.</p>
-      
-      <nav class="category-navigation">
-        <a href="/" class="category-card">
-          <span class="label">Caminhonete</span>
-          <div class="category-visual"><img src="/caminhonete.png" alt="Caminhonete"></div>
-        </a>
-        <a href="/" class="category-card">
-          <span class="label">SUV</span>
-          <div class="category-visual"><img src="/suv.png" alt="SUV"></div>
-        </a>
-        <a href="/" class="category-card">
-          <span class="label">Sedan</span>
-          <div class="category-visual"><img src="/sedan.png" alt="Sedan"></div>
-        </a>
-        <a href="/" class="category-card">
-          <span class="label">Hatch</span>
-          <div class="category-visual"><img src="/hatch.png" alt="Hatch"></div>
-        </a>
-      </nav>
-    </div>
-  </section>
+<main class="container">
+  <div *ngIf="view === 'home'" class="hero">
+    <h2>Performance e Rigor.</h2>
+    <p>Sua próxima conquista está na Casagrande Motors.</p>
+    <button (click)="setPage('estoque')">Ver Estoque</button>
+  </div>
 
-  <div class="container">
-    <section class="featured-selection">
-      <header class="section-header">
-        <nav class="highlights-nav">
-          <span class="active-tab">Destaques da Semana</span>
-        </nav>
-      </header>
-      
-      <div class="cards-layout">
-        <article class="vehicle-unit" *ngFor="let carro of carros">
-          <div class="image-placeholder"></div> 
-          <div class="card-content">
-            <span class="manufacturer">{{ carro.marca }}</span>
-            <h3>{{ carro.modelo }}</h3>
-            <p class="summary">{{ carro.descricao }}</p>
-          </div>
-        </article>
+  <div *ngIf="view === 'estoque' || view === 'home'" class="inventory-grid">
+    <div class="card" *ngFor="let c of listaCarros; let i = index">
+      <div class="img-box">
+        <img [src]="c.foto" [alt]="c.modelo">
+        <div class="admin-tools" *ngIf="isAdmin">
+          <button (click)="editar(c, i)">✏️</button>
+          <button (click)="excluir(i)">🗑️</button>
+        </div>
       </div>
-    </section>
+      <div class="info-box">
+        <span class="tag">{{ c.marca }}</span>
+        <h4>{{ c.modelo }}</h4>
+        <p>{{ c.descricao }}</p>
+        <div class="price-row">
+          <strong>R$ {{ c.preco | number:'1.2-2' }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <section class="management-area" *ngIf="isAdmin">
-      <header>
-        <h3>Administração de Estoque (Logado)</h3>
-      </header>
-      <form class="entry-form" (submit)="adicionar()">
-        <fieldset style="border: none; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0;">
-          <input [(ngModel)]="novoCarro.marca" name="marca" placeholder="Marca">
-          <input [(ngModel)]="novoCarro.modelo" name="modelo" placeholder="Modelo">
-          <input [(ngModel)]="novoCarro.preco" name="preco" type="number" placeholder="Preço">
-          <input [(ngModel)]="novoCarro.cor" name="cor" placeholder="Cor">
-          <textarea [(ngModel)]="novoCarro.descricao" name="descricao" placeholder="Diferenciais" style="grid-column: span 2;"></textarea>
-        </fieldset>
-        <button type="submit" class="submit-action" style="margin-top: 20px; width: 220px;">SALVAR NO BANCO</button>
-      </form>
-    </section>
+  <div *ngIf="view === 'admin' && isAdmin" class="admin-area">
+    <h3>{{ isEditando ? 'Atualizar Veículo' : 'Novo Cadastro' }}</h3>
+    <form (submit)="salvar()" class="form-motors">
+      <input [(ngModel)]="novoCarro.marca" name="marca" placeholder="Marca">
+      <input [(ngModel)]="novoCarro.modelo" name="modelo" placeholder="Modelo">
+      <input [(ngModel)]="novoCarro.preco" name="preco" type="number" placeholder="Preço">
+      <textarea [(ngModel)]="novoCarro.descricao" name="desc" placeholder="Descrição"></textarea>
+      <div class="btns-row">
+        <button type="button" (click)="setPage('estoque')">Voltar</button>
+        <button type="submit">Salvar</button>
+      </div>
+    </form>
   </div>
 </main>
 
-<footer class="page-footer">
-  <div class="container">
-    <p>&copy; 2026 Casagrande Motors. Transparência e rigor técnico.</p>
-    <button (click)="liberarAdmin()" class="admin-access-btn">Acesso Restrito</button>
-  </div>
+<footer class="footer-motors">
+  <p>&copy; 2026 Casagrande Motors. Desenvolvido por Vinícius Casagrande.</p>
+  <button (click)="acessoAdmin()" style="border:none; background:none; opacity: 0.1;">.</button>
 </footer>
