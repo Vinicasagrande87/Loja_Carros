@@ -1,16 +1,16 @@
 <header class="main-header">
   <div class="container header-wrap">
     <div class="brand-identity">
-      <a routerLink="/" style="text-decoration: none; color: inherit;">
+      <a href="/" style="text-decoration: none; color: inherit;">
         <h1>Casagrande Motors</h1>
       </a>
     </div>
 
     <nav class="main-navigation">
       <ul>
-        <li><a routerLink="/" title="Ir para Home">Home</a></li>
-        <li><a routerLink="/" title="Ver estoque completo">Estoque</a></li>
-        <li><a routerLink="/" title="Fale conosco">Contato</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Estoque</a></li>
+        <li><a href="/">Contato</a></li>
       </ul>
     </nav>
   </div>
@@ -23,28 +23,21 @@
       <p>Selecione a categoria que melhor define sua próxima jornada.</p>
       
       <nav class="category-navigation">
-        <a routerLink="/" class="category-card">
+        <a href="/" class="category-card">
           <span class="label">Caminhonete</span>
-          <div class="category-visual">
-             </div>
+          <div class="category-visual"><img src="/caminhonete.png" alt="Caminhonete"></div>
         </a>
-
-        <a routerLink="/" class="category-card">
+        <a href="/" class="category-card">
           <span class="label">SUV</span>
-          <div class="category-visual">
-             </div>
+          <div class="category-visual"><img src="/suv.png" alt="SUV"></div>
         </a>
-
-        <a routerLink="/" class="category-card">
+        <a href="/" class="category-card">
           <span class="label">Sedan</span>
-          <div class="category-visual">
-             </div>
+          <div class="category-visual"><img src="/sedan.png" alt="Sedan"></div>
         </a>
-
-        <a routerLink="/" class="category-card">
+        <a href="/" class="category-card">
           <span class="label">Hatch</span>
-          <div class="category-visual">
-             </div>
+          <div class="category-visual"><img src="/hatch.png" alt="Hatch"></div>
         </a>
       </nav>
     </div>
@@ -70,9 +63,9 @@
       </div>
     </section>
 
-    <section class="management-area">
+    <section class="management-area" *ngIf="isAdmin">
       <header>
-        <h3>Administração de Estoque</h3>
+        <h3>Administração de Estoque (Logado)</h3>
       </header>
       <form class="entry-form" (submit)="adicionar()">
         <fieldset style="border: none; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0;">
@@ -80,7 +73,7 @@
           <input [(ngModel)]="novoCarro.modelo" name="modelo" placeholder="Modelo">
           <input [(ngModel)]="novoCarro.preco" name="preco" type="number" placeholder="Preço">
           <input [(ngModel)]="novoCarro.cor" name="cor" placeholder="Cor">
-          <textarea [(ngModel)]="novoCarro.descricao" name="descricao" placeholder="Diferenciais do veículo" style="grid-column: span 2;"></textarea>
+          <textarea [(ngModel)]="novoCarro.descricao" name="descricao" placeholder="Diferenciais" style="grid-column: span 2;"></textarea>
         </fieldset>
         <button type="submit" class="submit-action" style="margin-top: 20px; width: 220px;">SALVAR NO BANCO</button>
       </form>
@@ -91,5 +84,6 @@
 <footer class="page-footer">
   <div class="container">
     <p>&copy; 2026 Casagrande Motors. Transparência e rigor técnico.</p>
+    <button (click)="liberarAdmin()" class="admin-access-btn">Acesso Restrito</button>
   </div>
 </footer>

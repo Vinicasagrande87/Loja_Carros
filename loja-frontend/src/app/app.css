@@ -8,10 +8,21 @@
   --glass: rgba(255, 255, 255, 0.85);
 }
 
-body { font-family: 'Inter', sans-serif; background-color: var(--light); color: var(--text); margin: 0; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--light);
+  color: var(--text);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* Header */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header Estilo Apple */
 .main-header {
   background: var(--glass);
   backdrop-filter: blur(15px);
@@ -21,17 +32,59 @@ body { font-family: 'Inter', sans-serif; background-color: var(--light); color: 
   top: 0;
   z-index: 100;
 }
-.header-wrap { display: flex; justify-content: space-between; align-items: center; }
-.brand-identity h1 { font-weight: 800; font-size: 1.3rem; text-transform: uppercase; margin: 0; }
-.main-navigation ul { display: flex; gap: 40px; list-style: none; padding: 0; }
-.main-navigation a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.95rem; }
 
-/* Hero e Categorias */
-.hero { padding: 80px 0 60px; text-align: center; }
-.hero h2 { font-size: 3.8rem; font-weight: 800; letter-spacing: -3px; margin-bottom: 10px; }
-.hero p { font-size: 1.2rem; color: #6e6e73; margin-bottom: 50px; }
+.header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-/* Novo Estilo das Navs com Imagem */
+.brand-identity h1 {
+  font-weight: 800;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.main-navigation ul {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-navigation a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.main-navigation a:hover { color: var(--primary); }
+
+/* Hero Section */
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 3.8rem;
+  font-weight: 800;
+  letter-spacing: -3px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #6e6e73;
+  margin-bottom: 50px;
+}
+
+/* Categorias com Imagens */
 .category-navigation {
   display: flex;
   justify-content: center;
@@ -46,8 +99,8 @@ body { font-family: 'Inter', sans-serif; background-color: var(--light); color: 
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  transition: transform 0.3s ease;
-  width: 140px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 160px;
 }
 
 .category-card .label {
@@ -56,53 +109,103 @@ body { font-family: 'Inter', sans-serif; background-color: var(--light); color: 
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.85rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   width: 100%;
   text-align: center;
 }
 
 .category-visual {
-  width: 100px;
-  height: 60px;
-  background: rgba(0,0,0,0.03); /* Espaço para sua imagem */
-  border-radius: 12px;
+  width: 140px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 .category-visual img {
-  max-width: 90%;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
-.category-card:hover { transform: translateY(-5px); }
+.category-card:hover { transform: translateY(-8px); }
 .category-card:hover .label { background: var(--dark); color: #fff; }
 
-/* Destaques e Cards */
+/* Vitrine de Veículos - AJUSTADO PARA CORRIGIR DESCONFIGURAÇÃO */
 .featured-selection { padding: 40px 0; }
 .highlights-nav { margin-bottom: 40px; border-bottom: 1px solid #e5e5e7; padding-bottom: 15px; }
-.active-tab { font-weight: 700; font-size: 1.1rem; border-bottom: 2px solid var(--dark); padding-bottom: 13px; }
+.active-tab { font-weight: 700; font-size: 1.1rem; border-bottom: 2px solid var(--dark); padding-bottom: 13px; display: inline-block; }
 
 .cards-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  /* AJUSTE AQUI: Permitir colunas menores (minmax(250px)) para alinhar 4 por linha antes de pular */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
+  width: 100%; /* Garante que o grid ocupe toda a largura do container */
 }
 
-.vehicle-unit { background: #fff; border-radius: 24px; overflow: hidden; transition: all 0.4s ease; border: 1px solid rgba(0,0,0,0.02); }
-.vehicle-unit:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+.vehicle-unit {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  width: 100%; /* Garante que o card ocupe todo o espaço da coluna do grid */
+  box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+}
+
+.vehicle-unit:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+}
+
 .image-placeholder { height: 200px; background: #e8e8ed; }
 .card-content { padding: 25px; }
 .manufacturer { color: var(--primary); text-transform: uppercase; font-size: 0.7rem; font-weight: 800; }
-.vehicle-unit h3 { margin: 5px 0 10px; font-size: 1.4rem; }
+.vehicle-unit h3 { margin: 5px 0 10px; font-size: 1.3rem; font-weight: 700; }
 .summary { color: #86868b; font-size: 0.9rem; line-height: 1.5; }
 
-/* Gestão */
-.management-area { background: #fff; border-radius: 28px; padding: 40px; margin: 80px 0; }
-.entry-form input, .entry-form textarea { background: #f5f5f7; border: none; border-radius: 12px; padding: 15px; font-family: inherit; }
-.submit-action { background: var(--dark); color: white; border-radius: 12px; padding: 18px; font-weight: 600; cursor: pointer; border: none; }
+/* Gestão (Admin) */
+.management-area {
+  background: #fff;
+  border-radius: 28px;
+  padding: 40px;
+  margin: 80px 0;
+  border: 1px solid rgba(0,0,0,0.05);
+  animation: fadeIn 0.5s ease;
+}
 
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.entry-form input, .entry-form textarea {
+  background: #f5f5f7;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-family: inherit;
+}
+
+.submit-action {
+  background: var(--dark);
+  color: white;
+  border-radius: 12px;
+  padding: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+/* Footer & Botão Secreto */
 .page-footer { padding: 60px 0; text-align: center; color: #86868b; }
+
+.admin-access-btn {
+  background: transparent;
+  border: none;
+  color: #e5e5e7;
+  font-size: 0.65rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: color 0.3s;
+}
+
+.admin-access-btn:hover { color: var(--primary); }
