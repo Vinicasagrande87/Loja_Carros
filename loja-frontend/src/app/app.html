@@ -1,43 +1,68 @@
 <main>
-  <app-header 
-    [view]="view" 
-    [isAdmin]="isAdmin" 
-    (navigate)="onNavigate($event)">
-  </app-header>
+  <app-header [view]="view" [isAdmin]="isAdmin" (navigate)="onNavigate($event)"></app-header>
 
   <div class="container main-content">
     
-    <app-home 
-      *ngIf="view === 'home'" 
-      (verEstoque)="onNavigate('estoque')">
-    </app-home>
+    <app-home *ngIf="view === 'home'" (verEstoque)="onNavigate('estoque')"></app-home>
 
-    <app-estoque 
-      *ngIf="view === 'estoque'" 
-      [carros]="carrosExibidos" 
-      [isAdmin]="isAdmin"
-      (filtrar)="onFilter($event)"
-      (editarCarro)="editar($event)"
-      (excluirCarro)="excluir($event)">
-    </app-estoque>
+    <section *ngIf="view === 'estoque'" class="estoque-section fade-in">
+      <div class="section-title">
+        <h2>Nosso Estoque</h2>
+        <p>A curadoria mais exclusiva de seminovos premium do Rio Grande do Sul.</p>
+      </div>
 
-    <app-admin 
-      *ngIf="view === 'admin'" 
-      [novoCarro]="novoCarro" 
-      [isEditando]="isEditando"
-      (salvar)="salvar()"
-      (cancelar)="cancelar()">
-    </app-admin>
+      <nav class="filter-bar">
+        <button (click)="onFilter('caminhonete')" [class.active]="categoriaSelecionada === 'caminhonete'" class="filter-btn">
+          <img src="/caminhonete.png" alt="Caminhonetes">
+          <span>Caminhonetes</span>
+        </button>
 
-    <app-contatos 
-      *ngIf="view === 'contatos'">
-    </app-contatos>
+        <button (click)="onFilter('suv')" [class.active]="categoriaSelecionada === 'suv'" class="filter-btn">
+          <img src="/suv.png" alt="SUVs">
+          <span>SUVs</span>
+        </button>
 
+        <button (click)="onFilter('sedan')" [class.active]="categoriaSelecionada === 'sedan'" class="filter-btn">
+          <img src="/sedan.png" alt="Sedans">
+          <span>Sedans</span>
+        </button>
+
+        <button (click)="onFilter('hatch')" [class.active]="categoriaSelecionada === 'hatch'" class="filter-btn">
+          <img src="/hatch.png" alt="Hatches">
+          <span>Hatches</span>
+        </button>
+      </nav>
+
+      <div class="grid-veiculos">
+        <article *ngFor="let c of carrosExibidos" class="car-card" (click)="abrirDetalhes(c)">
+          <div class="card-img">
+            <img [src]="c.foto" [alt]="c.modelo">
+            <span class="badge-status">{{ c.status }}</span>
+          </div>
+          <div class="card-info">
+            <small>{{ c.marca }} | {{ c.categoria }}</small>
+            <h3>{{ c.modelo }}</h3>
+            <p class="card-desc">{{ c.descricao }}</p>
+            <div class="card-footer">
+              <span class="preco">R$ {{ c.preco | number:'1.2-2' }}</span>
+              <span class="ano">{{ c.ano_modelo }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <app-detalhes 
+      *ngIf="view === 'detalhes' && carroSelecionado" 
+      [carro]="carroSelecionado"
+      (voltar)="view = 'estoque'"
+      (contato)="onNavigate('contatos')">
+    </app-detalhes>
+
+    <app-contatos *ngIf="view === 'contatos'"></app-contatos>
+    <app-admin *ngIf="view === 'admin'"></app-admin>
   </div>
 
   <app-footer></app-footer>
-
-  <button *ngIf="!isAdmin" class="admin-float" (click)="acessoAdmin()" title="Acesso Restrito">
-    🔐
-  </button>
+  <button *ngIf="!isAdmin" class="admin-float" (click)="acessoAdmin()">🔐</button>
 </main>

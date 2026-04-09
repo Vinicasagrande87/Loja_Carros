@@ -1,43 +1,19 @@
-<section class="inventory-area">
-  <nav class="filter-bar" aria-label="Filtros de categoria">
-    <button class="filter-btn" (click)="onFilter('caminhonete')">
-      <span>Caminhonetes</span>
-      <img src="caminhonete.png" alt="Caminhonete" class="class-icon">
-    </button>
-    <button class="filter-btn" (click)="onFilter('suv')">
-      <span>SUVs</span>
-      <img src="suv.png" alt="SUV" class="class-icon">
-    </button>
-    <button class="filter-btn" (click)="onFilter('sedan')">
-      <span>Sedans</span>
-      <img src="sedan.png" alt="Sedan" class="class-icon">
-    </button>
-    <button class="filter-btn" (click)="onFilter('hatch')">
-      <span>Hatchs</span>
-      <img src="hatch.png" alt="Hatch" class="class-icon">
-    </button>
-  </nav>
-
-  <div class="inventory-grid">
-    <article class="card" *ngFor="let c of carros; let i = index">
-      <figure class="img-box">
-        <img [src]="c.foto" [alt]="c.modelo" onerror="this.src='placeholder.png'">
-        <aside class="admin-tools" *ngIf="isAdmin">
-          <button (click)="onEditar(c, i)" title="Editar">✏️</button>
-          <button (click)="onExcluir(i)" title="Excluir">🗑️</button>
-        </aside>
-      </figure>
-
-      <div class="info-box">
-        <header>
-          <span class="tag">{{ c.marca }} | {{ c.categoria }}</span>
-          <h4>{{ c.modelo }}</h4>
-        </header>
-        <p>{{ c.descricao }}</p>
-        <footer class="price-row">
-          <strong>R$ {{ c.preco | number:'1.2-2' }}</strong>
-        </footer>
+<section class="estoque-section">
+  <div class="grid-estoque">
+    <div class="card-carro" *ngFor="let c of carros" (click)="verDetalhes.emit(c)">
+      <div class="card-img">
+        <img [src]="c.foto" [alt]="c.modelo">
+        <span class="badge-categoria">{{ c.categoria }}</span>
       </div>
-    </article>
+      <div class="card-body">
+        <small>{{ c.marca }}</small>
+        <h3>{{ c.modelo }}</h3>
+        <p class="card-desc">{{ c.descricao }}</p>
+        <div class="card-footer">
+          <span class="preco">R$ {{ c.preco | number:'1.2-2' }}</span>
+          <span class="ano">{{ c.ano_modelo }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

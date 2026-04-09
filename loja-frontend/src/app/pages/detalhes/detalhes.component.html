@@ -1,0 +1,31 @@
+<section class="detalhes-container">
+  <button class="btn-voltar" (click)="voltar.emit()">← Voltar ao Estoque</button>
+
+  <div class="detalhes-grid">
+    <div class="galeria">
+      <img [src]="carro.foto" class="foto-principal">
+    </div>
+
+    <div class="ficha-tecnica">
+      <span class="status-tag">{{ carro.status }}</span>
+      <h1>{{ carro.marca }} {{ carro.modelo }}</h1>
+      <p class="preco-grande">R$ {{ carro.preco | number:'1.2-2' }}</p>
+
+      <div class="specs-grid">
+        <div class="spec-item"><small>Ano</small><strong>{{ carro.ano_fabricacao }}/{{ carro.ano_modelo }}</strong></div>
+        <div class="spec-item"><small>Quilometragem</small><strong>{{ carro.quilometragem | number }} km</strong></div>
+        <div class="spec-item"><small>Combustível</small><strong>{{ carro.combustivel }}</strong></div>
+        <div class="spec-item"><small>Câmbio</small><strong>{{ carro.transmissao }}</strong></div>
+        <div class="spec-item"><small>Cor</small><strong>{{ carro.cor }}</strong></div>
+        <div class="spec-item"><small>Categoria</small><strong>{{ carro.categoria }}</strong></div>
+      </div>
+
+      <div class="descricao-box">
+        <h4>Sobre o veículo</h4>
+        <p>{{ carro.descricao }}</p>
+      </div>
+
+      <button class="btn-acao" (click)="contato.emit()">Tenho Interesse</button>
+    </div>
+  </div>
+</section>
